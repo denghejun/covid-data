@@ -1,0 +1,31 @@
+version: "3.4"
+services:
+  ichat-build:
+    build:
+      dockerfile: dockerfiles/build/Dockerfile
+      context: .
+      args:
+        env: ${env:-live}
+        target: ${target:-linux}
+        skip: ${skip:-dependency}
+    image: ichat-build:latest
+    environment: { }
+  ichat-deployable:
+    build:
+      dockerfile: dockerfiles/deployable/Dockerfile
+      context: .
+      args:
+        env: ${env:-live}
+        target: ${target:-linux}
+    image: ichat-deployable:latest
+    depends_on:
+      - ichat-build
+  ichat-release:
+    build:
+      dockerfile: dockerfiles/release/Dockerfile
+      context: .
+    image: ichat-release:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - ichat-deployable
