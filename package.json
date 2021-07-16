@@ -4,7 +4,7 @@
   "description": "",
   "main": "covid_stringency_index_data.js",
   "scripts": {
-    "start": "taiko covid_stringency_index_data.js --observe"
+    "start": "taiko covid_stringency_index_data.js"
   },
   "author": "",
   "license": "ISC",
